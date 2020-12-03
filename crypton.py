@@ -58,6 +58,7 @@ def de_crypter(in_file, key):
         decrypted_bytes = cipher.decrypt(buffer)
         out_f.write(decrypted_bytes)
         buffer = inp_f.read(read_buffer)
+      
 
     inp_f.close()
     out_f.close()
@@ -70,8 +71,6 @@ def main():
 
     crypter("dummy_data_img_multi4", key)
     de_crypter("dummy_data_img_multi4.enc", key)
-
-    # checking both if both original and decoded files are same
 
 
 if __name__ == '__main__':
