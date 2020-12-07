@@ -1,8 +1,8 @@
 from Crypto.Cipher import AES
 from crypton import crypter
-
-from io import BytesIO
 from io import StringIO
+import re
+
 
 def web_de_crypter(in_file, key):
     """decrypts the file's contents using the provided key and saves the decrypted file
@@ -36,12 +36,25 @@ def web_de_crypter(in_file, key):
 
 def main():
     key = b'\xae\xee\x81T /1\xbd\xba2Y\xa7\x85e=\xd7D;\x85;\xd0\xcc\xb9N\xc6\x91&\xc8\x95\x1a4\xed'
-
     crypter("dummy_data_img_multi4", key)
     data = web_de_crypter("dummy_data_img_multi4.enc", key)
     data = data.read()
-    print(type(data))
-    print(data)
+    # print(data)
+    data = data.splitlines()
+
+    full_path = data[0]
+    marker_string = data[1]
+    marker_string = re.sub("\(", '', marker_string)
+    marker_string = re.sub("\)", '', marker_string)
+    marker_list = marker_string.split(',')
+
+    image_string = data[2]
+    image_list = image_string.split('#')
+
+    marker_class_desc = data[3]
+    marker_class_desc_list = marker_class_desc.split(',')
+
+    print(full_path,"\n",marker_list,"\n",image_list,"\n", marker_class_desc_list)
 
 
 if __name__ == '__main__':
